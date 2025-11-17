@@ -1,0 +1,5 @@
+include(":simple-node")
+include(":simple-yarn")
+include(":simple-grunt")
+include(":simple-gulp")
+includeBuild("..")
