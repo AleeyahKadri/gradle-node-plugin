@@ -1,22 +1,22 @@
 val sourcesJar by tasks.registering(Jar::class) {
     archiveClassifier.set("sources")
-    from(sourceSets["main"].allSource)
+    from(project.the<SourceSetContainer>()["main"].allSource)
 }
 
 val groovydocJar by tasks.registering(Jar::class) {
-    dependsOn(tasks.groovydoc)
+    dependsOn(tasks.named("groovydoc"))
     archiveClassifier.set("groovydoc")
-    from(tasks.groovydoc.get().destinationDir)
+    from(tasks.named<Groovydoc>("groovydoc").get().destinationDir)
 }
 
 val javadocJar by tasks.registering(Jar::class) {
-    dependsOn(tasks.javadoc)
+    dependsOn(tasks.named("javadoc"))
     archiveClassifier.set("javadoc")
-    from(tasks.javadoc.get().destinationDir)
+    from(tasks.named<Javadoc>("javadoc").get().destinationDir)
 }
 
-artifacts {
-    archives(sourcesJar)
-    archives(groovydocJar)
-    archives(javadocJar)
+configurations.getByName("archives").artifacts.apply {
+    add(project.artifacts.add("archives", sourcesJar))
+    add(project.artifacts.add("archives", groovydocJar))
+    add(project.artifacts.add("archives", javadocJar))
 }

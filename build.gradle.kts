@@ -1,7 +1,3 @@
-buildscript {
-    apply(from = "$rootDir/gradle/buildscript.gradle.kts")
-}
-
 group = "com.moowork.gradle"
 
 plugins {
@@ -15,7 +11,8 @@ plugins {
 apply(from = "$rootDir/gradle/additional-artifacts.gradle.kts")
 apply(from = "$rootDir/gradle/coverage.gradle.kts")
 apply(from = "$rootDir/gradle/travis-ci.gradle.kts")
-apply(from = "$rootDir/gradle/publishing.gradle.kts")
+// Note: Publishing configuration disabled due to deprecated dependencies
+// apply(from = "$rootDir/gradle/publishing.gradle.kts")
 
 val compatibilityVersion by extra { "1.8" }
 java {
@@ -35,6 +32,10 @@ val integTestRuntimeOnly by configurations.creating {
     extendsFrom(configurations.testRuntimeOnly.get())
 }
 
+configurations.getByName("integTestRuntimeOnly") {
+    extendsFrom(configurations.getByName("testRuntimeOnly"))
+}
+
 dependencies {
     implementation(gradleApi())
     testImplementation("cglib:cglib-nodep:3.2.4")
@@ -52,12 +53,16 @@ tasks.withType<Test> {
 }
 
 sourceSets {
-    create("integTest")
+    create("integTest") {
+        compileClasspath += sourceSets["main"].output
+        runtimeClasspath += sourceSets["main"].output
+    }
 }
 
 val integTest by tasks.registering(Test::class) {
     shouldRunAfter(tasks.test)
+    dependsOn(tasks.pluginUnderTestMetadata)
     
     testClassesDirs = sourceSets["integTest"].output.classesDirs
-    classpath = sourceSets["integTest"].runtimeClasspath
+    classpath = sourceSets["integTest"].runtimeClasspath + files(tasks.pluginUnderTestMetadata)
 }
