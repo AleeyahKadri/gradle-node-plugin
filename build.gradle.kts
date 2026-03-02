@@ -1,5 +1,15 @@
 buildscript {
-    apply(from = "$rootDir/gradle/buildscript.gradle.kts")
+    repositories {
+        jcenter()
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
+    }
+
+    dependencies {
+        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
+        classpath("org.jfrog.buildinfo:build-info-extractor-gradle:4.4.0")
+    }
 }
 
 group = "com.moowork.gradle"
@@ -28,19 +38,19 @@ repositories {
 }
 
 configurations {
-    create("integTestCompile") {
-        extendsFrom(configurations["testCompile"])
+    val integTestCompile by creating {
+        extendsFrom(configurations.getByName("testCompile"))
     }
-    create("integTestRuntime") {
-        extendsFrom(configurations["testRuntime"])
+    val integTestRuntime by creating {
+        extendsFrom(configurations.getByName("testRuntime"))
     }
 }
 
 dependencies {
-    implementation(gradleApi())
-    testImplementation("cglib:cglib-nodep:3.2.4")
-    testImplementation("org.apache.commons:commons-io:1.3.2")
-    testImplementation("org.spockframework:spock-core:1.0-groovy-2.4") {
+    add("compile", gradleApi())
+    add("testCompile", "cglib:cglib-nodep:3.2.4")
+    add("testCompile", "org.apache.commons:commons-io:1.3.2")
+    add("testCompile", "org.spockframework:spock-core:1.0-groovy-2.4") {
         exclude(group = "org.codehaus.groovy")
     }
 }

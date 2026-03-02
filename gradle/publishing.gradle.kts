@@ -1,9 +1,7 @@
-plugins {
-    maven
-    `maven-publish`
-    id("com.jfrog.artifactory")
-    id("com.jfrog.bintray")
-}
+apply(plugin = "maven")
+apply(plugin = "maven-publish")
+apply(plugin = "com.jfrog.artifactory")
+apply(plugin = "com.jfrog.bintray")
 
 fun resolveProperty(envVarKey: String, projectPropKey: String): String? {
     val propValue = System.getenv()[envVarKey]
