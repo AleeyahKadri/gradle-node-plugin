@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             url = uri("https://plugins.gradle.org/m2/")
         }
@@ -34,7 +34,7 @@ java {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 configurations {

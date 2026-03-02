@@ -1,6 +1,8 @@
+import org.gradle.api.tasks.SourceSet
+
 val sourcesJar by tasks.registering(Jar::class) {
     archiveClassifier.set("sources")
-    from(sourceSets["main"].allSource)
+    from(project.the<SourceSetContainer>()["main"].allSource)
 }
 
 val groovydocJar by tasks.registering(Jar::class) {
