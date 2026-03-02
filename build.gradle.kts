@@ -29,7 +29,6 @@ apply(from = "$rootDir/gradle/travis-ci.gradle.kts")
 // Note: Publishing is commented out due to unavailable dependencies in buildscript classpath
 // apply(from = "$rootDir/gradle/publishing.gradle.kts")
 
-val compatibilityVersion: String by extra { "1.8" }
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8

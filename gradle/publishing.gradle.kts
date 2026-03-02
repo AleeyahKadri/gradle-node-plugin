@@ -78,7 +78,7 @@ project.configure<org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConve
             setMaven(true)
         }
         defaults {
-            publications("mavenJava")
+            setPublications("mavenJava")
         }
     }
 }
