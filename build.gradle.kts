@@ -6,10 +6,11 @@ buildscript {
         }
     }
 
-    dependencies {
-        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
-        classpath("org.jfrog.buildinfo:build-info-extractor-gradle:4.4.0")
-    }
+    // Note: Publishing plugins are commented out due to unavailable transitive dependencies
+    // dependencies {
+    //     classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
+    //     classpath("org.jfrog.buildinfo:build-info-extractor-gradle:4.4.0")
+    // }
 }
 
 group = "com.moowork.gradle"
@@ -25,7 +26,8 @@ plugins {
 apply(from = "$rootDir/gradle/additional-artifacts.gradle.kts")
 apply(from = "$rootDir/gradle/coverage.gradle.kts")
 apply(from = "$rootDir/gradle/travis-ci.gradle.kts")
-apply(from = "$rootDir/gradle/publishing.gradle.kts")
+// Note: Publishing is commented out due to unavailable dependencies in buildscript classpath
+// apply(from = "$rootDir/gradle/publishing.gradle.kts")
 
 val compatibilityVersion: String by extra { "1.8" }
 java {
