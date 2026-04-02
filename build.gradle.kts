@@ -1,10 +1,10 @@
 import org.gradle.api.JavaVersion
-import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.testing.Test
 
 buildscript {
-    apply(from = "$rootDir/gradle/buildscript.gradle", to = this)
+    apply(from = "$rootDir/gradle/buildscript.gradle", to = buildscript)
 }
 
 group = "com.moowork.gradle"
@@ -22,7 +22,7 @@ apply(from = "$rootDir/gradle/publishing.gradle")
 val compatibilityVersion = "1.8"
 extra["compatibilityVersion"] = compatibilityVersion
 
-configure<JavaPluginConvention> {
+configure<JavaPluginExtension> {
     sourceCompatibility = JavaVersion.toVersion(compatibilityVersion)
     targetCompatibility = JavaVersion.toVersion(compatibilityVersion)
 }
